@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MoviesController!{% endblock %}
+
+{% block body %}
+
+<h1>Liste des films</h1>
+
+<div class="container">
+    <ul class="all-movies">
+        {% for movie in movies %}
+            <li>{{ movie.title }} 
+            <a href="{{ path('movies.update', {id:movie.id}) }}">Update</a>
+            <a href="{{ path('movies.delete', {id:movie.id}) }}">Delete</a></li>
+        {% endfor %}
+    </ul>
+    {% if add == 0 %}
+        <a href="{{ path('movies.add') }}">Ajouter un film</a>
+    {% endif %}
+</div>
+
+{% if add > 0 %}
+    <div class="form-container">
+        {{ form_start(formmovie) }}
+            {{ form_label(formmovie.title) }}
+            {{ form_widget(formmovie.title) }}
+            <button type="submit">
+                {% if add == 1 %}
+                    Ajouter
+                {% else %}
+                    Mettre à jour
+                {% endif %}
+            </button>
+        {{ form_end(formmovie) }}
+    </div>
+{% endif %}
+
+{% endblock %}
