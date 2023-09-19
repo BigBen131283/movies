@@ -21,9 +21,10 @@
 
 {% if add > 0 %}
     <div class="form-container">
-        {{ form_start(formmovie) }}
+        {{ form_start(formmovie, {'attr': {'novalidate': 'novalidate'}}) }}
             {{ form_label(formmovie.title) }}
             {{ form_widget(formmovie.title) }}
+            {{ form_errors(formmovie.title) }}
             <button type="submit">
                 {% if add == 1 %}
                     Ajouter

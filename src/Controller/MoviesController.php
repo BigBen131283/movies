@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Movies;
+use App\Entity\User;
 use App\Form\MoviesType;
 use App\Repository\MoviesRepository;
 use Doctrine\ORM\EntityManager;
@@ -62,7 +63,9 @@ class MoviesController extends AbstractController
         }elseif($form->isSubmitted() && !$form->isValid()){
             $add = 1;
             return $this->render('movies/index.html.twig', [
-                'add' => $add
+                'add' => $add,
+                'movies' => $movies,
+                'formmovie' => $form->createView()
             ]);
         }else{
             return $this->render('movies/index.html.twig', [

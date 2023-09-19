@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MoviesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MoviesRepository::class)]
@@ -16,9 +17,10 @@ class Movies
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Merci de renseigner ce champ")]
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: Spectator::class, inversedBy: 'movies')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies')]
     private Collection $viewers;
 
     public function __construct()
@@ -44,14 +46,14 @@ class Movies
     }
 
     /**
-     * @return Collection<int, Spectator>
+     * @return Collection<int, User>
      */
     public function getViewers(): Collection
     {
         return $this->viewers;
     }
 
-    public function addViewer(Spectator $viewer): static
+    public function addViewer(User $viewer): static
     {
         if (!$this->viewers->contains($viewer)) {
             $this->viewers->add($viewer);
@@ -60,7 +62,7 @@ class Movies
         return $this;
     }
 
-    public function removeViewer(Spectator $viewer): static
+    public function removeViewer(User $viewer): static
     {
         $this->viewers->removeElement($viewer);
 
