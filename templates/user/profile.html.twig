@@ -2,6 +2,10 @@
 
 {% block title %}Hello {{ user.pseudo}} {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('/scripts/modal.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
     <h1>Mon profil</h1>
 
@@ -11,6 +15,16 @@
     </ul>
 
     <a href="{{ path('edit.user', {id:user.id}) }}">Mettre à jour</a>
-    <a href="{{ path('delete.user', {id:user.id}) }}">Suprimer mon profil</a>
+    <a href="#" class="btn-unsubscribe">Supprimer mon profil</a>
+
+    <div class="modal unsubcribe-modal">
+        <h2>Êtes-vous certain de vouloir supprimer votre profil ?</h2>
+        <ul>
+            <li>Vous n'aurez plus accès à votre compte</li>
+            <li>Votre liste de films sera supprimée</li>
+            <li>Vos commentaires seront supprimés</li>
+        </ul>
+        <a href="{{ path('delete.user', {id:user.id}) }}">Confirmer</a>
+    </div>
 
 {% endblock %}

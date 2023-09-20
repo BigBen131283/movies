@@ -66,7 +66,6 @@ class UserController extends AbstractController
         int $id,
         EntityManagerInterface $entityManager,
         Request $request,
-        UserPasswordHasherInterface $userPasswordHasher
     ): Response
     {
         /** @var UserRepository $repository */
@@ -75,24 +74,17 @@ class UserController extends AbstractController
         $user = $repository->find($id);
         $new = 2;
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['is_register_form' => false]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $user
-            ->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            )
-            ->setRoles(['ROLE_USER']);
-
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('profile.user');
+            return $this->render('user/profile.html.twig', [
+                'user' => $user
+            ]);
 
         }elseif($form->isSubmitted() && !$form->isValid()){
             $new = 2;
@@ -115,14 +107,20 @@ class UserController extends AbstractController
         ]);
     }
     
-    #[Route('/delete', name: 'delete.user')]
-    public function deleteUser(): Response
+    #[Route('/delete/{id}', name: 'delete.user')]
+    public function deleteUser(
+        int $id,
+        EntityManagerInterface $entityManager,
+        SecurityController $security
+    ): Response
     {
+        /** @var UserRepository $repository */
+        $repository = $entityManager->getRepository(User::class);
+        $user = $repository->find($id);
+        $repository->remove($user, true);
+        $security->logout();
         
-        
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        return $this->redirectToRoute('home');
     }
 
     #[Route('/{id}', name: 'profile.user')]

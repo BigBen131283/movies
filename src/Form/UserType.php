@@ -13,17 +13,21 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('pseudo');
             // ->add('roles')
-            ->add('password')
-            ->add('pseudo')
             // ->add('movies')
-        ;
+
+            if($options['is_register_form'])
+            {
+                $builder->add('password');
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'is_register_form' => true, // par défaut c'est un formulaire d'inscription
         ]);
     }
 }
