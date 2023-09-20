@@ -27,4 +27,18 @@
         <a href="{{ path('delete.user', {id:user.id}) }}">Confirmer</a>
     </div>
 
+    <a href="{{ path('userlist', {id:user.id}) }}">Choisir un film</a>
+
+    {% if new > 0 %}
+            <div class="form-container">
+        {{ form_start(formuser, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_label(formuser.movies) }}
+            {{ form_widget(formuser.movies) }}
+            {{ form_errors(formuser.movies) }}
+            
+            <button type="submit">Mettre à jour ma liste</button>
+        {{ form_end(formuser) }}
+    </div>
+    {% endif %}
+
 {% endblock %}

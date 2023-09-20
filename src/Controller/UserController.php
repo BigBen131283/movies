@@ -137,4 +137,53 @@ class UserController extends AbstractController
             'user' => $user
         ]);
     }
+
+    #[Route('/{id}/ma-liste', name: 'userlist')]
+    public function myList(
+        int $id,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response
+    {
+        /** @var UserRepository $repository */
+
+        $repository = $entityManager->getRepository(User::class);
+        $user = $repository->find($id);
+
+        $form = $this->createForm(UserType::class, $user, ['is_movieslist_form' => true]);
+        $form->handleRequest($request);
+
+        $new = 0;
+
+        if($form->isSubmitted() && $form->isValid()){
+            dump($user);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $new = 0;
+            return $this->render('user/profile.html.twig', [
+                'new' => $new,
+                'user' => $user,
+            ]);
+        }elseif($form->isSubmitted() && !$form->isValid()){
+            $new = 1;
+            return $this->render('user/profile.html.twig', [
+                'new' => $new,
+                'user' => $user,
+                'formuser' => $form->createView(),
+            ]);
+        }else{
+            $new = 1;
+            return $this->render('user/profile.html.twig', [
+                'formuser' => $form->createView(),
+                'user' => $user,
+                'new' => $new
+            ]);
+        }
+
+        // return $this->render('user/profile.html.twig', [
+        //     'user' => $user,
+        //     'formuser' => $form,
+        //     'new' => $new
+        // ]);
+    }
 }

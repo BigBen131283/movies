@@ -20,7 +20,7 @@ class Movies
     #[Assert\NotBlank(message: "Merci de renseigner ce champ")]
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies', cascade:['persist', 'remove'], fetch: "EAGER")]
     private Collection $viewers;
 
     public function __construct()
@@ -67,5 +67,10 @@ class Movies
         $this->viewers->removeElement($viewer);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

@@ -1,0 +1,2 @@
+# GET 'https://api.themoviedb.org/3/search/movie?query=Jack+Reacher&api_key=1d93598c1a936b384def355d01c72c2b'
+GET 'https://api.themoviedb.org/3/movie/11?api_key=1d93598c1a936b384def355d01c72c2b'
