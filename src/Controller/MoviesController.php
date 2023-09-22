@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Movies;
-use App\Entity\User;
 use App\Form\MoviesType;
 use App\Repository\MoviesRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

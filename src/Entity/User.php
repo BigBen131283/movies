@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: "Merci de renseigner ce champ")]
     private ?string $pseudo = null;
 
-    #[ORM\ManyToMany(targetEntity: Movies::class, mappedBy: 'viewers', cascade:['persist', 'remove'], fetch: "EAGER")]
+    #[ORM\ManyToMany(targetEntity: Movies::class, mappedBy: 'viewers', cascade: ['persist', 'remove'])]
     private Collection $movies;
 
     public function __construct()

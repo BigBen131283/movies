@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\MoviesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MoviesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MoviesRepository::class)]
 class Movies
@@ -20,7 +20,7 @@ class Movies
     #[Assert\NotBlank(message: "Merci de renseigner ce champ")]
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies', cascade:['persist', 'remove'], fetch: "EAGER")]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies')]
     private Collection $viewers;
 
     public function __construct()

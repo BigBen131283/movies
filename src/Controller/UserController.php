@@ -81,9 +81,11 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+            $new = 0;
 
             return $this->render('user/profile.html.twig', [
-                'user' => $user
+                'user' => $user,
+                'new' => $new
             ]);
 
         }elseif($form->isSubmitted() && !$form->isValid()){
@@ -132,9 +134,12 @@ class UserController extends AbstractController
         /** @var UserRepository $repository */
         $repository = $entityManager->getRepository(User::class);
         $user = $repository->find($id);
+
+        $new = 0;
         
         return $this->render('user/profile.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'new' => $new
         ]);
     }
 
@@ -149,14 +154,15 @@ class UserController extends AbstractController
 
         $repository = $entityManager->getRepository(User::class);
         $user = $repository->find($id);
-
+        dump($user);
+        
         $form = $this->createForm(UserType::class, $user, ['is_movieslist_form' => true]);
         $form->handleRequest($request);
+        dump($user);
 
         $new = 0;
 
         if($form->isSubmitted() && $form->isValid()){
-            dump($user);
             $entityManager->persist($user);
             $entityManager->flush();
             $new = 0;
