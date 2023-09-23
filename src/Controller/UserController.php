@@ -154,11 +154,9 @@ class UserController extends AbstractController
 
         $repository = $entityManager->getRepository(User::class);
         $user = $repository->find($id);
-        dump($user);
         
         $form = $this->createForm(UserType::class, $user, ['is_movieslist_form' => true]);
         $form->handleRequest($request);
-        dump($user);
 
         $new = 0;
 
@@ -185,11 +183,5 @@ class UserController extends AbstractController
                 'new' => $new
             ]);
         }
-
-        // return $this->render('user/profile.html.twig', [
-        //     'user' => $user,
-        //     'formuser' => $form,
-        //     'new' => $new
-        // ]);
     }
 }
