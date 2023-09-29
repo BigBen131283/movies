@@ -20,7 +20,7 @@ class Movies
     #[Assert\NotBlank(message: "Merci de renseigner ce champ")]
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'movies', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'movies', cascade: ['persist', 'remove'])]
     private Collection $viewers;
 
     public function __construct()
