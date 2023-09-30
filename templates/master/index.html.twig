@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MasterController!{% endblock %}
+
+{% block body %}
+    <h1>Test ManyToMany</h1>
+
+    <div class="container">
+        <div class="form-container">
+            {{form_start(formMaster)}}
+                {{ form_label(formMaster.name) }}
+                {{ form_widget(formMaster.name) }}
+                {{ form_errors(formMaster.name) }}
+                
+                {{ form_label(formMaster.tool) }}
+                {{ form_widget(formMaster.tool) }}
+                {{ form_errors(formMaster.tool) }}
+
+                <button type="submit">Associer</button>
+            {{form_end(formMaster)}}
+        </div>
+    </div>
+{% endblock %}

@@ -154,10 +154,8 @@ class UserController extends AbstractController
 
         $repository = $entityManager->getRepository(User::class);
         $user = $repository->find($id);
-        
         $form = $this->createForm(UserType::class, $user, ['is_movieslist_form' => true]);
         $form->handleRequest($request);
-
         $new = 0;
 
         if($form->isSubmitted() && $form->isValid()){
